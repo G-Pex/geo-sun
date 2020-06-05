@@ -13,8 +13,10 @@ const InputBoxes = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   height: calc(100% - 100px);
+  max-height: 400px;
   width: 100%;
-  border: 1px solid black;
+  border: 1px solid grey;
+  border-radius: 5px;
   box-sizing: border-box;
 `;
 
@@ -23,6 +25,12 @@ const Button = styled.button`
   height: 40px;
   margin-left: auto;
   margin-right: auto;
+  background-color: white;
+  border: 1px solid grey;
+  border-radius: 5px;
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 export default function SunTimes() {
@@ -30,6 +38,7 @@ export default function SunTimes() {
   const [sunriseTime, setSunriseTime] = useState(null);
   const [sunsetTime, setSunsetTime] = useState(null);
 
+  const defaultInputProps = { height: 60, width: 400 };
   const defaultIconProps = {
     height: 30,
     width: 30,
@@ -38,25 +47,41 @@ export default function SunTimes() {
     paddings: { top: 20 },
   };
 
-  async function fetchTimes() {}
+  async function fetchTimes() {
+    const results = await callMapBoxApi(location);
+    console.log('results', results.address);
+    const sunRiseSetTimes = await getSunTimes(
+      results.address[0].center[1],
+      results.address[0].center[0]
+    );
+    setSunriseTime(sunRiseSetTimes.results.sunrise);
+    setSunsetTime(sunRiseSetTimes.results.sunset);
+  }
+
+  async function requestUserLocation() {
+    navigator.geolocation.getCurrentPosition(async function(position) {
+      const response = await callMapBoxApi(
+        `${position.coords.longitude},${position.coords.latitude}`
+      );
+      return setLocation(response.address[0].place_name);
+    });
+  }
   function getLocationInput() {
     return {
-      height: 60,
-      width: 400,
+      ...defaultInputProps,
       placeholderText: location || 'Please enter your location',
       updateFunc: value => setLocation(value),
       iconProps: {
         ...defaultIconProps,
         svg: locate,
         svgClass: '#locate',
-        onClickFunc: () => console.log('click!'),
+        onClickFunc: () => requestUserLocation(),
       },
     };
   }
   function getSunriseInput() {
     return {
-      height: 60,
-      width: 400,
+      ...defaultInputProps,
       placeholderText: sunriseTime || 'Sunrise time will appear here',
       iconProps: {
         ...defaultIconProps,
@@ -67,8 +92,7 @@ export default function SunTimes() {
   }
   function getSunsetInput() {
     return {
-      height: 60,
-      width: 400,
+      ...defaultInputProps,
       placeholderText: sunsetTime || 'Sunset time will appear here',
       iconProps: {
         ...defaultIconProps,
@@ -80,7 +104,9 @@ export default function SunTimes() {
   return (
     <InputBoxes>
       <InputWithIcon {...getLocationInput()} />
-      <Button onClick={() => fetchTimes()}>Get Sunrise and Sunset Times</Button>
+      <Button onClick={() => fetchTimes()} disabled={location.length < 3}>
+        Get Sunrise and Sunset Times
+      </Button>
       <InputWithIcon {...getSunriseInput()} />
       <InputWithIcon {...getSunsetInput()} />
     </InputBoxes>
