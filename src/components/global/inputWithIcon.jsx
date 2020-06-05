@@ -5,7 +5,7 @@ import InteractiveIcon from './interactiveIcon';
 
 const TextBoxContainer = styled.div`
   position: relative;
-
+  display: flex;
   height: ${props => props.height}px;
   width: ${props => props.width}px;
 
@@ -39,6 +39,8 @@ export default function InputWithIcon(props) {
     paddings,
     iconProps,
     placeholderText,
+    isDisabled,
+    updateFunc,
   } = props;
 
   // If margins not supplied use auto left/right and 5px top/bottom
@@ -56,17 +58,27 @@ export default function InputWithIcon(props) {
       margin={margin}
       padding={padding}
     >
-      <TextBoxInput placeholder={placeholderText || ''} />
+      <TextBoxInput
+        placeholder={placeholderText || ''}
+        disabled={isDisabled}
+        onChange={e => updateFunc(e.currentTarget.value)}
+      />
       {iconProps && (
-        <IconPosition>
-          <InteractiveIcon onClick={() => iconProps.onClick()} {...iconProps} />
+        <IconPosition onClick={() => iconProps.onClickFunc()}>
+          <InteractiveIcon {...iconProps} />
         </IconPosition>
       )}
     </TextBoxContainer>
   );
 }
 
-InputWithIcon.propTypes = ({ number, object, string } = PropTypes) => {
+InputWithIcon.propTypes = ({
+  number,
+  object,
+  string,
+  bool,
+  func,
+} = PropTypes) => {
   return {
     /* The height of the textbox */
     height: number,
@@ -84,5 +96,9 @@ InputWithIcon.propTypes = ({ number, object, string } = PropTypes) => {
     iconProps: object,
     /* The placeholder message for the input */
     placeholderText: string,
+    /* If the input is disabled */
+    isDisabled: bool,
+    /* Callback function to capture input value */
+    updateFunc: string,
   };
 };
