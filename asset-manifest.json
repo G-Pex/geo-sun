@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/geo-sun/static/css/main.5f361e03.chunk.css",
+    "main.js": "/geo-sun/static/js/main.43af2b26.chunk.js",
+    "main.js.map": "/geo-sun/static/js/main.43af2b26.chunk.js.map",
+    "runtime-main.js": "/geo-sun/static/js/runtime-main.e843c270.js",
+    "runtime-main.js.map": "/geo-sun/static/js/runtime-main.e843c270.js.map",
+    "static/js/2.4d7d0edb.chunk.js": "/geo-sun/static/js/2.4d7d0edb.chunk.js",
+    "static/js/2.4d7d0edb.chunk.js.map": "/geo-sun/static/js/2.4d7d0edb.chunk.js.map",
+    "index.html": "/geo-sun/index.html",
+    "precache-manifest.d0d118eeae08f85268c6cb93bd3fa679.js": "/geo-sun/precache-manifest.d0d118eeae08f85268c6cb93bd3fa679.js",
+    "service-worker.js": "/geo-sun/service-worker.js",
+    "static/css/main.5f361e03.chunk.css.map": "/geo-sun/static/css/main.5f361e03.chunk.css.map",
+    "static/js/2.4d7d0edb.chunk.js.LICENSE.txt": "/geo-sun/static/js/2.4d7d0edb.chunk.js.LICENSE.txt",
+    "static/media/logo.svg": "/geo-sun/static/media/logo.5d5d9eef.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.e843c270.js",
+    "static/js/2.4d7d0edb.chunk.js",
+    "static/css/main.5f361e03.chunk.css",
+    "static/js/main.43af2b26.chunk.js"
+  ]
+}
