@@ -21,6 +21,8 @@ const TextBoxInput = styled.input`
   height: 100%;
   width: 100%;
   text-align: center;
+  border: 1px solid grey;
+  border-radius: 5px;
 `;
 
 const IconPosition = styled.div`
@@ -29,6 +31,7 @@ const IconPosition = styled.div`
   width: auto;
   right: 5px;
 `;
+
 export default function InputWithIcon(props) {
   const {
     height,
@@ -99,6 +102,6 @@ InputWithIcon.propTypes = ({
     /* If the input is disabled */
     isDisabled: bool,
     /* Callback function to capture input value */
-    updateFunc: string,
+    updateFunc: func,
   };
 };
