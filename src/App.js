@@ -1,26 +1,25 @@
 import React from 'react';
+import { ThemeProvider } from 'styled-components';
 import './App.css';
 import styled from 'styled-components';
 import SunTimes from 'components/sunTimes/sunTimes';
+import { Header } from 'components/header/header';
+import { defaultTheme } from './utils/index';
 
 const AppContainer = styled.div`
   position: relative;
   height: 100%;
   width: 100%;
 `;
-const Header = styled.div`
-  position: relative;
-  height: 100px;
-  width: 100%;
-  border-bottom: 1px solid black;
-`;
 
 function App() {
   return (
-    <AppContainer>
-      <Header></Header>
-      <SunTimes />
-    </AppContainer>
+    <ThemeProvider theme={defaultTheme}>
+      <AppContainer>
+        <Header title={'Local Sunrise and Sunset Times'}></Header>
+        <SunTimes />
+      </AppContainer>
+    </ThemeProvider>
   );
 }
 
