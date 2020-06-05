@@ -1,25 +1,26 @@
 {
   "files": {
     "main.css": "/geo-sun/static/css/main.676a32d5.chunk.css",
-    "main.js": "/geo-sun/static/js/main.6b42fff8.chunk.js",
-    "main.js.map": "/geo-sun/static/js/main.6b42fff8.chunk.js.map",
+    "main.js": "/geo-sun/static/js/main.676cd001.chunk.js",
+    "main.js.map": "/geo-sun/static/js/main.676cd001.chunk.js.map",
     "runtime-main.js": "/geo-sun/static/js/runtime-main.e843c270.js",
     "runtime-main.js.map": "/geo-sun/static/js/runtime-main.e843c270.js.map",
-    "static/js/2.593d869e.chunk.js": "/geo-sun/static/js/2.593d869e.chunk.js",
-    "static/js/2.593d869e.chunk.js.map": "/geo-sun/static/js/2.593d869e.chunk.js.map",
+    "static/js/2.e5447587.chunk.js": "/geo-sun/static/js/2.e5447587.chunk.js",
+    "static/js/2.e5447587.chunk.js.map": "/geo-sun/static/js/2.e5447587.chunk.js.map",
     "index.html": "/geo-sun/index.html",
-    "precache-manifest.dc424cca4078b84a2160da9979a5f444.js": "/geo-sun/precache-manifest.dc424cca4078b84a2160da9979a5f444.js",
+    "precache-manifest.d6bbd2f40578865aceb337ff19e1dfd6.js": "/geo-sun/precache-manifest.d6bbd2f40578865aceb337ff19e1dfd6.js",
     "service-worker.js": "/geo-sun/service-worker.js",
     "static/css/main.676a32d5.chunk.css.map": "/geo-sun/static/css/main.676a32d5.chunk.css.map",
-    "static/js/2.593d869e.chunk.js.LICENSE.txt": "/geo-sun/static/js/2.593d869e.chunk.js.LICENSE.txt",
+    "static/js/2.e5447587.chunk.js.LICENSE.txt": "/geo-sun/static/js/2.e5447587.chunk.js.LICENSE.txt",
     "static/media/locate.svg": "/geo-sun/static/media/locate.6a110ff3.svg",
     "static/media/sunrise.svg": "/geo-sun/static/media/sunrise.2de64360.svg",
+    "static/media/sunrise.jpg": "/geo-sun/static/media/sunrise.3cbcf2bf.jpg",
     "static/media/sunset.svg": "/geo-sun/static/media/sunset.57164aa6.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.e843c270.js",
-    "static/js/2.593d869e.chunk.js",
+    "static/js/2.e5447587.chunk.js",
     "static/css/main.676a32d5.chunk.css",
-    "static/js/main.6b42fff8.chunk.js"
+    "static/js/main.676cd001.chunk.js"
   ]
 }
