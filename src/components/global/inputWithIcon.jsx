@@ -1,3 +1,12 @@
+/**
+ *
+ * @summary An configurable input component with an optional icon
+ * @description An customisable input with onChange callback function and optional icon
+ * @author Gareth Perry <garethnperry@gmail.com>
+ *
+ * @version 1.0.0 (June 2020)
+ */
+
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -19,10 +28,16 @@ const TextBoxContainer = styled.div`
 `;
 const TextBoxInput = styled.input`
   height: 100%;
-  width: 100%;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
   text-align: center;
   border: 1px solid grey;
   border-radius: 5px;
+  :disabled {
+    background-color: white;
+    opacity: 0.8;
+  }
 `;
 
 const IconPosition = styled.div`

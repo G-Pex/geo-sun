@@ -1,3 +1,12 @@
+/**
+ *
+ * @summary A configurable svg icon component
+ * @description A configurable icon component using an SVG file (svg id must be provided as #className)
+ * @author Gareth Perry <garethnperry@gmail.com>
+ *
+ * @version 1.0.0 (June 2020)
+ */
+
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -30,7 +39,7 @@ export default function InteractiveIcon(props) {
     hoverHeight,
     hoverWidth,
     svg,
-    svgClass,
+    svgClass, // provide svg id to override styles
     fillColour,
     lineColour,
     margins,

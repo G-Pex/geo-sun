@@ -1,3 +1,12 @@
+/**
+ *
+ * @summary The Sunrise/Sunset times component
+ * @description Using the user geolocation or user provided location, displays the sunrise and sunset times
+ * @author Gareth Perry <garethnperry@gmail.com>
+ *
+ * @version 1.0.0 (June 2020)
+ */
+
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import InputWithIcon from 'components/global/inputWithIcon';
@@ -5,6 +14,9 @@ import locate from '../../assets/icons/locate.svg';
 import sunrise from '../../assets/icons/sunrise.svg';
 import sunset from '../../assets/icons/sunset.svg';
 import { callMapBoxApi, getSunTimes } from './api';
+import sunriseImg from '../../assets/sunrise.jpg';
+import Loading from 'components/global/loading';
+import Error from 'components/global/error';
 
 const SunTimesContainer = styled.div`
   height: calc(100% - 100px);
@@ -12,7 +24,6 @@ const SunTimesContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border: 1px solid grey;
   box-sizing: border-box;
 `;
 
@@ -21,14 +32,19 @@ const InputBoxes = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  height: 400px;
-  width: 100%;
+  height: 450px;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
   border-radius: 5px;
   box-sizing: border-box;
+  background-image: url(${props => props.bgImg});
+  background-repeat: no-repeat;
+  border: 1px solid yellow;
 `;
 
 const Button = styled.button`
-  max-width: 300px;
+  width: 320px;
   height: 40px;
   margin-left: auto;
   margin-right: auto;
@@ -44,32 +60,77 @@ export default function SunTimes() {
   const [location, setLocation] = useState('');
   const [sunriseTime, setSunriseTime] = useState(null);
   const [sunsetTime, setSunsetTime] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
-  const defaultInputProps = { height: 60, width: 400 };
-  const defaultIconProps = {
-    height: 30,
-    width: 30,
-    paddings: { top: 20 },
-  };
-
+  /**
+   * Gets the sunrise/sunset times
+   */
   async function fetchTimes() {
-    const results = await callMapBoxApi(location);
-    const sunRiseSetTimes = await getSunTimes(
-      results.address[0].center[1],
-      results.address[0].center[0]
-    );
-    setSunriseTime(sunRiseSetTimes.results.sunrise);
-    setSunsetTime(sunRiseSetTimes.results.sunset);
+    setIsLoading(true);
+    // Get the geolocation data from mapbox api
+    const response = await callMapBoxApi(location);
+    if (response.error) {
+      setIsLoading(false);
+      return setErrorMessage(response.error);
+    }
+
+    try {
+      // Get the sun rise/set times from api
+      const sunRiseSetTimes = await getSunTimes(
+        response.address[0].center[1],
+        response.address[0].center[0]
+      );
+      // Set state with returned values
+      setSunriseTime(sunRiseSetTimes.results.sunrise + ' GMT');
+      setSunsetTime(sunRiseSetTimes.results.sunset + ' GMT');
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      return setErrorMessage('No addresses returned');
+    }
   }
 
+  /**
+   * Requests to use the users location, calls mapbox api to get address for input value
+   */
   async function requestUserLocation() {
+    setIsLoading(true);
+
     navigator.geolocation.getCurrentPosition(async function(position) {
+      // Get address data using user geolocation
       const response = await callMapBoxApi(
         `${position.coords.longitude},${position.coords.latitude}`
       );
-      return setLocation(response.address[0].place_name);
+      if (response.error) {
+        setIsLoading(false);
+        return setErrorMessage(response.error);
+      }
+      try {
+        const address = response.address[0].place_name.split(',');
+        // Set value of location input to returned address
+        return setLocation(`${address[0]}, ${address[1]}, ${address[2]}`);
+      } catch (error) {
+        setIsLoading(false);
+        return setErrorMessage('No addresses returned');
+      }
     });
+    setIsLoading(false);
   }
+
+  // The default props for all inputs
+  const defaultInputProps = { height: 60, width: 350 };
+
+  // The default props for all input icons
+  const defaultIconProps = {
+    height: 30,
+    width: 30,
+    paddings: { top: 20, right: 10 },
+  };
+
+  /**
+   * Returns the props of the Location Input Box
+   */
   function getLocationInput() {
     return {
       ...defaultInputProps,
@@ -83,6 +144,10 @@ export default function SunTimes() {
       },
     };
   }
+
+  /**
+   * Returns the props of the Sunrise Input Box
+   */
   function getSunriseInput() {
     return {
       ...defaultInputProps,
@@ -95,6 +160,10 @@ export default function SunTimes() {
       },
     };
   }
+
+  /**
+   * Returns the props of the Sunset Input Box
+   */
   function getSunsetInput() {
     return {
       ...defaultInputProps,
@@ -109,7 +178,11 @@ export default function SunTimes() {
   }
   return (
     <SunTimesContainer>
-      <InputBoxes>
+      <InputBoxes bgImg={sunriseImg}>
+        {isLoading && <Loading />}
+        {errorMessage && (
+          <Error error={errorMessage} closeFunc={() => setErrorMessage(null)} />
+        )}
         <InputWithIcon {...getLocationInput()} />
         <Button onClick={() => fetchTimes()} disabled={location.length < 3}>
           Get Sunrise and Sunset Times

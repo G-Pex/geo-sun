@@ -1,3 +1,12 @@
+/**
+ *
+ * @summary Sunrise and Sunset Times App
+ * @description  The root of the Application
+ * @author Gareth Perry <garethnperry@gmail.com>
+ *
+ * @version 1.0.0 (June 2020)
+ */
+
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import './App.css';
@@ -10,6 +19,12 @@ const AppContainer = styled.div`
   position: relative;
   height: 100%;
   width: 100%;
+  max-width: 1024px;
+  border-left: yellow;
+  border-right: yellow;
+  background-color: #ffaa00;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 function App() {

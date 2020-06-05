@@ -1,6 +1,11 @@
 const mapBoxAccessToken =
   'pk.eyJ1IjoiZ3BoZXgiLCJhIjoiY2sxOTN5b3Y5MHlyazNsbXJiNXlqaWxpciJ9.maDa-fTI1_chmXtcMZh3lw';
 
+/**
+ * Calls the mapbox places api with the provided searchString
+ * @param {*} searchString : The search string to be queried
+ * @returns The mapbox API response object or error
+ */
 async function callMapBoxApi(searchString) {
   try {
     return await fetch(
@@ -20,10 +25,19 @@ async function callMapBoxApi(searchString) {
   }
 }
 
+/**
+ * Calls the sunrise-sunset api with the provided latitude and longitude
+ * @param {*} lat : The latitude to be queried
+ * @param {*} lng : The longitude to be queried
+ * @returns The  response object or error
+ */
 async function getSunTimes(lat, lng) {
-  let url = `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&date=today`;
-  const response = await fetch(url).then(res => res.json());
-  return response;
+  try {
+    let url = `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&date=today`;
+    return await fetch(url).then(res => res.json());
+  } catch (error) {
+    return { error };
+  }
 }
 
 export { callMapBoxApi, getSunTimes };
