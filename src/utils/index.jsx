@@ -3,9 +3,7 @@ const defaultTheme = {
   primary: 'white',
   secondary: 'black',
 
-
-  font_family: "'Baloo Chettan 2', cursive;",
-  font_family_alt: 'Oxanium',
+  font_family: "'Raleway', sans-serif",
 };
 
 function tryTheme(props, key) {

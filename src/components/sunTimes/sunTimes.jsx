@@ -1,21 +1,28 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import InputWithIcon from 'components/global/inputWithIcon';
-import { tryTheme } from '../../utils/index';
 import locate from '../../assets/icons/locate.svg';
 import sunrise from '../../assets/icons/sunrise.svg';
 import sunset from '../../assets/icons/sunset.svg';
 import { callMapBoxApi, getSunTimes } from './api';
+
+const SunTimesContainer = styled.div`
+  height: calc(100% - 100px);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid grey;
+  box-sizing: border-box;
+`;
 
 const InputBoxes = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  height: calc(100% - 100px);
-  max-height: 400px;
+  height: 400px;
   width: 100%;
-  border: 1px solid grey;
   border-radius: 5px;
   box-sizing: border-box;
 `;
@@ -42,14 +49,11 @@ export default function SunTimes() {
   const defaultIconProps = {
     height: 30,
     width: 30,
-    fillColour: tryTheme('red'),
-    lineColour: tryTheme('red'),
     paddings: { top: 20 },
   };
 
   async function fetchTimes() {
     const results = await callMapBoxApi(location);
-    console.log('results', results.address);
     const sunRiseSetTimes = await getSunTimes(
       results.address[0].center[1],
       results.address[0].center[0]
@@ -83,6 +87,7 @@ export default function SunTimes() {
     return {
       ...defaultInputProps,
       placeholderText: sunriseTime || 'Sunrise time will appear here',
+      isDisabled: true,
       iconProps: {
         ...defaultIconProps,
         svg: sunrise,
@@ -94,6 +99,7 @@ export default function SunTimes() {
     return {
       ...defaultInputProps,
       placeholderText: sunsetTime || 'Sunset time will appear here',
+      isDisabled: true,
       iconProps: {
         ...defaultIconProps,
         svg: sunset,
@@ -102,13 +108,15 @@ export default function SunTimes() {
     };
   }
   return (
-    <InputBoxes>
-      <InputWithIcon {...getLocationInput()} />
-      <Button onClick={() => fetchTimes()} disabled={location.length < 3}>
-        Get Sunrise and Sunset Times
-      </Button>
-      <InputWithIcon {...getSunriseInput()} />
-      <InputWithIcon {...getSunsetInput()} />
-    </InputBoxes>
+    <SunTimesContainer>
+      <InputBoxes>
+        <InputWithIcon {...getLocationInput()} />
+        <Button onClick={() => fetchTimes()} disabled={location.length < 3}>
+          Get Sunrise and Sunset Times
+        </Button>
+        <InputWithIcon {...getSunriseInput()} />
+        <InputWithIcon {...getSunsetInput()} />
+      </InputBoxes>
+    </SunTimesContainer>
   );
 }
