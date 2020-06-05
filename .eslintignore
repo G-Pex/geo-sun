@@ -1,0 +1,19 @@
+/src/registerServiceWorker.js
+/src/components/icon/characterMap.js
+/src/template.js
+
+# Build configs
+webpack.config.js
+babel.config.js
+.babelrc
+
+# Assets
+*.svg
+*.png
+*.css
+*.json
+*.icon
+*.html
+*.md
+*.txt
+*.lock
